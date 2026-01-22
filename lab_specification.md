@@ -13,21 +13,9 @@ By the end of this lab, you will be able to:
 ### Overview
 In this lab, you'll create a package structure that models the biological classification of vertebrate animals. You'll organize animals into a hierarchy that mirrors taxonomic relationships, and learn how Python's import system allows you to access attributes and modules at different levels of the hierarchy.
 
-### Background: Animal Classification
-Vertebrates are animals with backbones. They can be classified into two main categories based on body temperature regulation:
-
-**Warm-Blooded Vertebrates:**
-- Birds (e.g., parrot, robin)
-- Mammals (e.g., lion, seal)
-
-**Cold-Blooded Vertebrates:**
-- Fish (e.g., shark, pufferfish)
-- Amphibians (e.g., frog, salamander)
-- Reptiles (e.g., lizard, snake)
-
 ### Lab Structure
 
-You'll create a package hierarchy that mirrors the biological classification of vertebrates. The structure, as shown in the following diagram, organizes vertebrates by their characteristics (warm-blooded vs. cold-blooded) and then by their specific classification (fish, mammals, birds, etc.).
+You'll create a package hierarchy that mirrors the biological classification of vertebrates, which are animals with backbones. The structure, as shown in the following diagram, organizes vertebrates by their characteristics (warm-blooded vs. cold-blooded) and then by their specific classification (fish, mammals, birds, etc.).
 
 ![Vertebrates Classification](.devcontainer/vertebrates.png)
 
@@ -46,6 +34,7 @@ You'll also create a `main.py` file at the root of your workspace to test your p
 ### Task 1.1: Create the Basic Structure
 1. Design a directory hierarchy that represents the animal classification system
 1. Create the necessary directories and files to make your hierarchy into valid Python packages
+1. Create only the package structure - you'll create the modules in later tasks
 
 **Hints:**
 - Think about how to represent the hierarchical relationship: animals → vertebrates → temperature regulation → specific classification → individual animals
@@ -56,22 +45,23 @@ You'll also create a `main.py` file at the root of your workspace to test your p
 Let's start with a simple example: create a module for the shark.
 
 1. Decide where the shark module should live in your hierarchy
-2. Create the module file and add attributes that describe a shark (e.g., species name, size)
-3. Add a print statement to the module so you can observe when it gets imported
-4. Create `main.py` and experiment with importing your shark module
+2. Create the module file and add attributes that describe a shark (e.g., the attributes from the diagram)
+3. Add a `print` statement to the module so you can observe when it gets imported
+4. Create `main.py` at the root of your project and experiment with importing your shark module, and add a `print` statement so you know when it's accessed.
 5. Try to access the shark's attributes from `main.py`
 
 **Exploration Questions:**
-- When does the print statement execute?
+- When does each `print` statement execute? Was this what you expected? Why or why not?
 - What's the full path needed to access attributes?
 - What happens if you import the same module twice?
    - Consider examining the output of `sys.modules` and `locals().keys()`
+- What exception do you get if you try to import an attribute that doesn't exist?
 
 ---
 
 ## Part 2: Sharing Attributes Within a Package
 
-Each classification level should have attributes that apply to all animals in that category. For example, all fish share certain characteristics, while all mammals share different characteristics.
+Each classification level has attributes that apply to all animals in that category. For example, all fish share certain characteristics, while all mammals share different characteristics.
 
 ### Task 2.1: Create Shared Attributes
 Use the classification diagram above to see some characteristics that all fish share. Create a way to store these shared attributes so that individual fish modules can access them.
@@ -85,6 +75,8 @@ Now make your shark module able to access the shared fish attributes. Experiment
 - Try importing the attributes as a module object
 - Access attributes through that module object
 - Question: Can you access attributes directly on the shark, or do you need to go through the attributes module?
+- (Note to self - move below to an answer key)
+     - if you import attributed as a module into shark.py
 
 **Approach 2:** Import specific attributes
 - Import individual attributes from the shared module
