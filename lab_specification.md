@@ -1,5 +1,5 @@
-# Python Imports, Modules, and Packages Lab
-## Animal Classification System
+# Import is Important Tutorial
+## Lab: Animal Classification System
 
 ### Learning Objectives
 By the end of this lab, you will be able to:
@@ -27,7 +27,7 @@ Vertebrates are animals with backbones. They can be classified into two main cat
 
 ### Lab Structure
 
-You'll create a package hierarchy that mirrors the biological classification of vertebrates. The structure, as shown in the following diagram, should organize vertebrates by their characteristics (warm-blooded vs. cold-blooded) and then by their specific classification (fish, mammals, birds, etc.).
+You'll create a package hierarchy that mirrors the biological classification of vertebrates. The structure, as shown in the following diagram, organizes vertebrates by their characteristics (warm-blooded vs. cold-blooded) and then by their specific classification (fish, mammals, birds, etc.).
 
 ![Vertebrates Classification](.devcontainer/vertebrates.png)
 
@@ -44,13 +44,13 @@ You'll also create a `main.py` file at the root of your workspace to test your p
 ## Part 1: Understanding Packages vs. Modules
 
 ### Task 1.1: Create the Basic Structure
-1. Research what makes a directory a Python package
-2. Design a directory hierarchy that represents the animal classification system
-3. Create the necessary directories and files to make your hierarchy into valid Python packages
+1. Design a directory hierarchy that represents the animal classification system
+1. Create the necessary directories and files to make your hierarchy into valid Python packages
 
 **Hints:**
 - Think about how to represent the hierarchical relationship: animals → vertebrates → temperature regulation → specific classification → individual animals
-- What file is needed in each directory to make it a package?
+- What file is needed in each directory to make it a regular package?
+- Would a namespace package work better? Why or why not?
 
 ### Task 1.2: Create Your First Module
 Let's start with a simple example: create a module for the shark.
@@ -65,6 +65,7 @@ Let's start with a simple example: create a module for the shark.
 - When does the print statement execute?
 - What's the full path needed to access attributes?
 - What happens if you import the same module twice?
+   - Consider examining the output of `sys.modules` and `locals().keys()`
 
 ---
 
@@ -73,7 +74,7 @@ Let's start with a simple example: create a module for the shark.
 Each classification level should have attributes that apply to all animals in that category. For example, all fish share certain characteristics, while all mammals share different characteristics.
 
 ### Task 2.1: Create Shared Attributes
-Think about the characteristics that all fish share. Create a way to store these shared attributes so that individual fish modules can access them.
+Use the classification diagram above to see some characteristics that all fish share. Create a way to store these shared attributes so that individual fish modules can access them.
 
 **Challenge:** Where should you put these shared attributes? How should you name the file or module?
 
@@ -91,7 +92,7 @@ Now make your shark module able to access the shared fish attributes. Experiment
 - Question: What's the difference in how you access these attributes compared to Approach 1?
 
 **Approach 3:** Import everything at once
-- Research how to import all attributes from a module at once
+- Import all attributes from a module at once
 - Question: What are the trade-offs of this approach?
 
 **Exploration Questions:**
@@ -136,33 +137,13 @@ Right now, to access specific animals, you might need to import the full path. L
 ## Part 4: Complete the Classification System
 
 ### Task 4.1: Implement All Animal Modules
-Expand your package to include all the animals from the classification system. Each animal should:
+Expand your package to include all the animals from the vertebrates classification system diagram above. Each animal should:
 1. Be represented as its own module
 2. Have access to its classification's shared attributes
-3. Have at least 2 unique attributes specific to that animal species
-
-**Animals to implement (2 per classification):**
-- Fish: shark, pufferfish
-- Amphibians: frog, salamander
-- Reptiles: lizard, snake
-- Birds: parrot, robin
-- Mammals: lion, seal
+3. Have at least two unique attributes specific to that animal species
 
 ### Task 4.2: Define Shared Attributes for Each Classification
-For each of the five classifications, determine what attributes are shared by all animals in that group, and create a way to store and share those attributes.
-
-**Guiding questions:**
-- What characteristics do all fish share?
-- How are amphibians different from reptiles, even though both are cold-blooded?
-- What makes birds unique from other warm-blooded animals?
-- What defines mammals?
-
-Think about attributes like:
-- Physical features (scales, fur, feathers, etc.)
-- How they breathe
-- Their environment
-- How they reproduce
-- Body temperature regulation
+For each of the five classifications, use the classification diagram determine the attributes that are shared by all animals in that group, and create a way to store and share those attributes.
 
 ### Task 4.3: Make Everything Accessible
 For each classification package, configure the package initialization so that:
@@ -205,8 +186,6 @@ Python offers multiple ways to import modules and attributes. Experiment with di
 - Convenience: How much typing is required?
 - Namespace pollution: What names are added to your current namespace?
 - Flexibility: How easy is it to access multiple items?
-
-Document your findings about which import style works best for different situations.
 
 ---
 
