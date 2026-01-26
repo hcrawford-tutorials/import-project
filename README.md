@@ -10,6 +10,12 @@ By the end of this lab, you will be able to:
 - Import modules and attributes using various import syntaxes
 - Understand how Python's import system affects attribute access
 
+### Setup Instructions
+
+1. Create a new directory called `animal-classification` in your workspace
+2. Navigate to this directory in your terminal
+3. You'll build your entire package structure from scratch in this directory
+
 ### Overview
 In this lab, you'll create a package structure that models the biological classification of vertebrate animals. You'll organize animals into a hierarchy that mirrors taxonomic relationships, and learn how Python's import system allows you to access attributes and modules at different levels of the hierarchy.
 
@@ -17,7 +23,7 @@ In this lab, you'll create a package structure that models the biological classi
 
 You'll create a package hierarchy that mirrors the biological classification of vertebrates, which are animals with backbones. The structure, as shown in the following diagram, organizes vertebrates by their characteristics (warm-blooded vs. cold-blooded) and then by their specific classification (fish, mammals, birds, etc.).
 
-![Vertebrates Classification](.devcontainer/vertebrates.png)
+![Vertebrates Classification Diagram](.devcontainer/vertebrates.png)
 
 **Your Goal:** Design and implement a package structure where:
 - Each level of classification is represented by a package (directory with `__init__.py`)
@@ -41,21 +47,28 @@ You'll also create a `main.py` file at the root of your workspace to test your p
 - What file is needed in each directory to make it a regular package?
 - Would a namespace package work better? Why or why not?
 
+##### Success
+You'll know you succeeded when:
+1. You can import your package hierarchy without errors
+1. Running `python -c "import vertebrates"` completes without error
+
 ### Task 1.2: Create Your First Module
 Let's start with a simple example: create a module for the shark.
 
 1. Decide where the shark module should live in your hierarchy
-2. Create the module file and add attributes that describe a shark (e.g., the attributes from the diagram)
-3. Add a `print` statement to the module so you can observe when it gets imported
-4. Create `main.py` at the root of your project and experiment with importing your shark module, and add a `print` statement so you know when it's accessed.
-5. Try to access the shark's attributes from `main.py`
+1. Create the module file and add attributes that describe a shark (e.g., the attributes from the diagram)
+1. Add a `print` statement to the shark module to observe when it gets imported
+1. Import the shark module in `main.py` and add print statements to display shark attributes
 
-**Exploration Questions:**
+##### Success
+You'll know you succeeded when:
+1. Running `main.py` prints the shark's attributes without errors.
+
+##### Reflection
 - When does each `print` statement execute? Was this what you expected? Why or why not?
 - What's the full path needed to access attributes?
 - What happens if you import the same module twice?
    - Consider examining the output of `sys.modules` and `locals().keys()`
-   - ANSWER (REMOVE LATER): since the first import statement places vertebrates in locals().keys() and vertebrates/cold_blooded/fish/shark in sys.modules(), they are considered cached and the import system will find them during the second import statement and not reload them. In this way, modules are considered singletons.
 - What exception do you get if you try to import an attribute that doesn't exist?
 
 ---
@@ -76,24 +89,21 @@ Now make your shark module able to access the shared fish attributes. Experiment
 - Try importing the attributes as a module object
 - Access attributes through that module object
 - Question: Can you access attributes directly on the shark, or do you need to go through the attributes module?
-- (Note to self - move below to an answer key)
-     - if you import attributes as a module into shark.py like this `import vertebrates.cold_blooded.fish.attributes` then in main.py you CANNOT do this: `print(f"{vertebrates.cold_blooded.fish.shark.<attr name>})` because the import statement does NOT bring the attributes into the `shark` namespace. You'd have to do this: `print(f"{vertebrates.cold_blooded.fish.attributes.<attr name>})` which defeats the purpose because you want the attribute to come from the `shark` module so it's related to the shark and not just to fish in general. This allows you to "query" things about a shark (e.g., does a shark have fins?) rather than just about fish in general.
-     - if you import attributes as a module into shark.py like this `from vertebrates.cold_blooded.fish import attributes` then you still CANNOT do this: `print(f"{vertebrates.cold_blooded.fish.shark.<attr name>})` because this brings the `attributes` module but not the individual attributes into the `shark` namespace. This means that main.py has to access the attributes like this: `print(f"main: {vertebrates.cold_blooded.fish.shark.attributes.breathes_through=}")`. This might be what we want, but the added step of having to access the attributes module still doesn't allow for simpler queries like accessing `shark.<attr name>` to discover whether a shark has fins.
 
 **Approach 2:** Import specific attributes
 - Import individual attributes from the shared module
 - Try accessing these attributes directly
 - Question: What's the difference in how you access these attributes compared to Approach 1?
-   - (Note to self - move below to an answer key)
-   - Two ways this approach can work: in `shark.py`: `from vertebrates.cold_blooded.fish.attributes import <comma separated list of attributes>` or `from vertebrates.cold_blooded.fish.attributes import *`. Both keep the attributes in the namespace of `shark.py` to allow for `shark.<attr name>` access. The former is preferred to help avoid shadowing standard libraries (TODO: are there other reasons this is bad?). This allows this import in `main.py`: `import vertebrates.cold_blooded.fish.shark` and `print(f"main: {vertebrates.cold_blooded.fish.shark.<attr name>=}")`
-   - the above two ways use absolute imports (preferred for clarity); these are the relative import equivalents: `from .attributes import <comma separated list of attributes>` and `from .attributes import *`.
-   - the difference 
 
 **Approach 3:** Import everything at once
 - Import all attributes from a module at once
 - Question: What are the trade-offs of this approach?
 
-**Exploration Questions:**
+##### Success
+You'll know you succeeded when:
+1. You've tried each of the three approaches listed above and understand the differences between each approach.
+
+##### Reflection
 - What does the dot (`.`) mean in import statements?
 - What's the difference between relative and absolute imports?
 - Which approach makes the most sense for your use case and why?
@@ -112,7 +122,7 @@ Right now, to access specific animals, you might need to import the full path. L
 2. If this doesn't work initially, research how `__init__.py` can help
 3. Modify the appropriate `__init__.py` file to make individual fish modules accessible
 
-**Exploration Questions:**
+##### Reflection
 - What happens when you import a package?
 - What role does `__init__.py` play in controlling access?
 
@@ -124,7 +134,7 @@ Right now, to access specific animals, you might need to import the full path. L
 2. If it doesn't work, figure out what you need to add to `__init__.py`
 3. Make it so attributes are accessible at multiple levels (both from the package and from individual modules)
 
-**Exploration Questions:**
+##### Reflection
 - At how many different levels can you now access `has_scales`?
 - Draw or describe the namespace hierarchy
 - What are the benefits and drawbacks of making attributes available at multiple levels?
@@ -134,19 +144,37 @@ Right now, to access specific animals, you might need to import the full path. L
 ## Part 4: Complete the Classification System
 
 ### Task 4.1: Implement All Animal Modules
-Expand your package to include all the animals from the vertebrates classification system diagram above. Each animal should:
+Expand your package to include all 10 animals from the vertebrates classification system diagram above. Each animal should:
 1. Be represented as its own module
-2. Have access to its classification's shared attributes
-3. Have the three unique attributes specific to that animal species from the classification diagram
+1. Have access to its classification's shared attributes
+1. Have the three unique attributes specific to that animal species from the classification diagram
+
+##### Success
+You'll know you succeeded when:
+1. You have  10 animal modules (2 per classification)
+2. Each animal module can be imported without errors
+3. Each animal has access to its classification's shared attributes without copying them into each animal's module
 
 ### Task 4.2: Define Shared Attributes for Each Classification
-For each of the five classifications, use the classification diagram determine the attributes that are shared by all animals in that group, and create a way to store and share those attributes.
+For each of the five classifications, use the classification diagram to determine the attributes that are shared by all animals in that group, and create a way to store and share those attributes.
+
+##### Success
+You'll know you succeeded when:
+1. You have five shared attribute modules/files (one per classification)
+2. Attributes from the diagram are stored appropriately
+3. Individual animal modules can successfully access shared attributes
 
 ### Task 4.3: Make Everything Accessible
 For each classification package, configure the package initialization so that:
 1. All individual animal modules can be accessed through the package
-2. All shared attributes can be accessed at the package level
-3. The import paths are as readable and clear as possible for users of your package
+1. All shared attributes can be accessed at the package level
+1. The import paths are as readable and clear as possible for users of your package
+
+##### Success
+You'll know you succeeded when:
+1. You can import a classification and access individual animals through it
+2. Shared attributes are accessible at the package level
+3. The challenge examples `fish.shark.has_scales` and `fish.has_scales` both work
 
 **Challenge:** Can you make it so someone can write `import vertebrates.cold_blooded.fish as fish` and then access both `fish.shark.has_scales` and `fish.has_scales`?
 
@@ -155,12 +183,12 @@ For each classification package, configure the package initialization so that:
 ## Part 5: Testing Your Package Structure
 
 ### Task 5.1: Create a Comprehensive Test Script
-Create a `main.py` file that demonstrates you can:
+Expand your `main.py` file that you created in Task 1.2 to demonstrate that you can:
 
 1. **Import entire classifications** and access their shared attributes
-2. **Access individual animals** through their classification packages
-3. **Compare different classifications** by showing attributes from different groups
-4. **Show the full hierarchy** by accessing attributes at multiple levels (package level and module level)
+1. **Access individual animals** through their classification packages
+1. **Compare different classifications** by showing attributes from different groups
+1. **Show the full hierarchy** by accessing attributes at multiple levels (package level and module level)
 
 Your test script should clearly demonstrate that:
 - Shared attributes are accessible at the classification level
@@ -184,9 +212,12 @@ Python offers multiple ways to import modules and attributes. Experiment with di
 - Namespace pollution: What names are added to your current namespace?
 - Flexibility: How easy is it to access multiple items?
 
+#### Deliverable (Optional)
+Create a file called `import_experiments.py` that demonstrates each import style with comments explaining the trade-offs you observed.
+
 ---
 
-## Part 6: Reflection Questions
+## Part 6: Reflection
 
 After completing the lab, reflect on these questions:
 
@@ -213,7 +244,7 @@ When you complete this lab, you should have:
    - Uses `__init__.py` files to make directories into packages
    - Allows imports at different levels of the hierarchy
 
-2. **At least 10 animal modules** (2 per classification):
+2. **10 animal modules** (2 per classification):
    - Fish, Amphibians, Reptiles, Birds, Mammals
    - Each with unique attributes appropriate to that species
 
@@ -233,22 +264,3 @@ When you complete this lab, you should have:
    - How `__init__.py` controls namespace visibility
    - When to use relative vs. absolute imports
    - Trade-offs between different import styles
-
----
-
-## Common Pitfalls and Tips
-
-### Pitfall 1: Forgetting `__init__.py`
-**Problem:** Import fails with "No module named 'animals'"
-**Solution:** Ensure every directory in the package hierarchy has an `__init__.py` file
-
-### Pitfall 2: Incorrect Relative Imports
-**Problem:** `ImportError: attempted relative import with no known parent package`
-**Solution:**
-- Relative imports (`.` syntax) only work within packages
-- Always run your code from outside the package directory
-- Use `python main.py`, not `python animals/vertebrates/...`
-
-### Pitfall 3: Accessing Unimported Modules
-**Problem:** `AttributeError: module 'animals.vertebrates.cold-blooded.fish' has no attribute 'shark'`
-**Solution:** Make sure `__init__.py` imports the shark module
