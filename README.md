@@ -50,14 +50,14 @@ You'll also create a `main.py` file at the root of your workspace to test your p
 ##### Success
 You'll know you succeeded when:
 1. You can import your package hierarchy without errors
-1. Running `python -c "import vertebrates"` completes without error
+1. Running `python3.14 -c "import vertebrates"` completes without error
 
 ### Task 1.2: Create Your First Module
 Let's start with a simple example: create a module for the shark.
 
 1. Decide where the shark module should live in your hierarchy
-1. Create the module file and add attributes that describe a shark (e.g., the attributes from the diagram)
-1. Add a `print` statement to the shark module to observe when it gets imported
+1. Create the module file and add attributes that describe a shark (e.g., the attributes from the diagram). The attributes can be represented with any names and data types you choose.
+1. Add a `print` statement to the shark module to observe when it gets imported. This is usually the first line in the file so it runs before any `import` statements.
 1. Import the shark module in `main.py` and add print statements to display shark attributes
 
 ##### Success
@@ -65,6 +65,7 @@ You'll know you succeeded when:
 1. Running `main.py` prints the shark's attributes without errors.
 
 ##### Reflection
+- Are you accessing the attributes with the fully qualified import (e.g., `vertebrates.cold_blooded.fish.shark.has_fins`)? If so, how can you change the `import` statement so you can refer just to the attribute (e.g., `has_fins`)? How would the `import` statement change if you wanted to refer to them with the animal name (e.g., `shark.fins`)?
 - When does each `print` statement execute? Was this what you expected? Why or why not?
 - What's the full path needed to access attributes?
 - What happens if you import the same module twice?
@@ -85,18 +86,19 @@ Use the classification diagram above to see some characteristics that all fish s
 ### Task 2.2: Import Attributes into a Module
 Now make your shark module able to access the shared fish attributes. Experiment with different import approaches:
 
-**Approach 1:** Import the entire attributes module
-- Try importing the attributes as a module object
-- Access attributes through that module object
+**Approach 1:** Import the entire attributes module into the `shark` module
+- Try importing the attributes as a module object in your shark module
+- In `main.py`, import the shark module and update the `print` statements to print out the attributes
 - Question: Can you access attributes directly on the shark, or do you need to go through the attributes module?
 
-**Approach 2:** Import specific attributes
-- Import individual attributes from the shared module
-- Try accessing these attributes directly
+**Approach 2:** Import specific attributes into the `shark` module
+- Import individual attributes from the shared module into the `shark` module
+- In `main.py`, try accessing these attributes directly from the shark module first using an absolute import statement, then with a relative import statement.
 - Question: What's the difference in how you access these attributes compared to Approach 1?
+- Question: Do you prefer the absolute or the relative import? Why?
 
 **Approach 3:** Import everything at once
-- Import all attributes from a module at once
+- Import all attributes from the attributes module into the shark module without specifying them individually
 - Question: What are the trade-offs of this approach?
 
 ##### Success
@@ -115,10 +117,10 @@ You'll know you succeeded when:
 Right now, to access specific animals, you might need to import the full path. Let's explore how `__init__.py` can control what's accessible when you import a package.
 
 ### Task 3.1: Make Modules Accessible at Package Level
-**Goal:** Be able to import the fish package and access individual fish (like shark) through it, without having to import the full path to each fish.
+**Goal:** Be able to import the fish package into `main.py` and access individual fish (like shark) through it, without having to import the full path to each fish.
 
 **Experiment:**
-1. Try importing just the fish package and accessing the shark module through it
+1. Try importing just the `fish` package into `main.py` and access the `shark` module through it. Try both absolute and relative imports. 
 2. If this doesn't work initially, research how `__init__.py` can help
 3. Modify the appropriate `__init__.py` file to make individual fish modules accessible
 
@@ -130,7 +132,7 @@ Right now, to access specific animals, you might need to import the full path. L
 **Goal:** Be able to access shared fish attributes (like `has_scales`) directly from the fish package, not just from individual fish modules.
 
 **Experiment:**
-1. Try accessing a shared attribute directly from the fish package
+1. In `main.py`, try accessing a shared attribute directly from the `fish` package without going through `shark`
 2. If it doesn't work, figure out what you need to add to `__init__.py`
 3. Make it so attributes are accessible at multiple levels (both from the package and from individual modules)
 
