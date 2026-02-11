@@ -146,10 +146,16 @@ Right now, to access specific animals, you might need to import the full path. L
 ## Part 4: Complete the Classification System
 
 ### Task 4.1: Implement All Animal Modules
-Expand your package to include **two animals** from **at least three** of the five classifications the vertebrates classification system diagram above, for a total of **six animal modules**. Each animal should:
+Expand your package to include **two animals each** from **at least three** of the five classifications the vertebrates classification system diagram above, for a total of **six animal modules**. Each animal should:
 1. Be represented as its own module
 1. Have access to its classification's shared attributes
 1. Have the three unique attributes specific to that animal species from the classification diagram
+1. Uses a variety of different import methods, including the following:
+   * absolute imports
+   * relative imports
+   * the `from <module> import ..." structure
+   * adding imports to `__init__.py`
+   * modularizing code where it's beneficial and importing into the original files
 
 **Stretch Goal:**
 Complete all modules for all 10 animals in the vertebrates classification system.
